@@ -1,40 +1,56 @@
 package com.example.qpid_android
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.qpid_android.ui.theme.QpidAndroidTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.qpid_android.feature.main.MainScreen
+import com.example.qpid_android.navigation.QpidNavigationItem
+import com.example.qpid_android.util.DevicePaddings
+import com.example.qpid_android.util.getNavigationBarHeightDp
+import com.example.qpid_android.util.getStatusBarHeightDp
+import com.example.qpid_android.util.setStatusBarTransparent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        DevicePaddings.statusBarHeightDp = getStatusBarHeightDp()
+        DevicePaddings.navigationBarHeightDp = getNavigationBarHeightDp()
+
         super.onCreate(savedInstanceState)
+
         setContent {
-            QpidAndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+            BaseApp()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun BaseApp() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = QpidNavigationItem.Main.route) {
+        composable(QpidNavigationItem.Splash.route) {
+
+        }
+        composable(QpidNavigationItem.Main.route) {
+            MainScreen(navController)
+        }
+    }
+}
+
+fun Context.getActivity(): ComponentActivity? = when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.getActivity()
+    else -> null
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    QpidAndroidTheme {
-        Greeting("Android")
-    }
+
 }
