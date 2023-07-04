@@ -5,7 +5,9 @@ object QpidColor {
     val White = Color(0xFFFFFFFF)
     val Black = Color(0xFF000000)
 
-    val Gray100 = Color(0xFFD0D0D0)
+    val Gray000 = Color(0xFFF5F6F6)
+    val Gray100 = Color(0xFFF0F0F0)
+    val Gray200 = Color(0xFFD0D0D0)
 
     val Green100 = Color(0xFFAECD8C)
     val Green200 = Color(0xFF9DC59C)

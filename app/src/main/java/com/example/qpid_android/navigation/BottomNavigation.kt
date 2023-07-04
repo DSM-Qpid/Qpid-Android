@@ -44,7 +44,7 @@ fun QpidBottomNavigation(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = Color(0xFFEAEAEA),
+                color = QpidColor.Gray100,
                 shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
             )
     ) {

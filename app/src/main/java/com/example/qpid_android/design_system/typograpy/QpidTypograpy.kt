@@ -38,8 +38,74 @@ fun PreBold12(
         color = color,
         lineHeight = lineHeight,
         letterSpacing = letterSpacing,
-        baselineToTop = 10f,
-        baselineToBottom = 10f,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+@Composable
+fun PreBold20(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Bold,
+        size = 20,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+@Composable
+fun PreMedium16(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Medium,
+        size = 16,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
         textDecoration = textDecoration,
         textAlign = textAlign,
         overflow = overflow,

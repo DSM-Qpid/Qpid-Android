@@ -16,7 +16,6 @@ import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.DevicePaddings
 import com.example.qpid_android.util.getNavigationBarHeightDp
 import com.example.qpid_android.util.getStatusBarHeightDp
-import com.example.qpid_android.util.setStatusBarTransparent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +46,4 @@ fun Context.getActivity(): ComponentActivity? = when (this) {
     is ComponentActivity -> this
     is ContextWrapper -> baseContext.getActivity()
     else -> null
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-
 }
