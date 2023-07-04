@@ -18,7 +18,7 @@ import com.example.qpid_android.feature.webview.WebViewScreen
 import com.example.qpid_android.navigation.QpidBottomNavigation
 import com.example.qpid_android.navigation.QpidBottomNavigationItem
 import com.example.qpid_android.util.DevicePaddings
-import com.example.qpid_android.util.setBlueStatusBar
+import com.example.qpid_android.util.setLightStatusBar
 
 @Composable
 fun MainScreen(
@@ -28,7 +28,7 @@ fun MainScreen(
     val navController = rememberNavController()
 
     val context = LocalContext.current
-    context.setBlueStatusBar()
+    context.setLightStatusBar()
 
     Scaffold(
         modifier = Modifier

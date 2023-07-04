@@ -44,6 +44,7 @@ fun Context.setDarkStatusBar() {
 
 fun Context.setBlueStatusBar() {
     getActivity()?.window?.statusBarColor = QpidColor.Blue.toArgb()
+
 }
 
 fun Int.pixelToDp(context: Context): Int =

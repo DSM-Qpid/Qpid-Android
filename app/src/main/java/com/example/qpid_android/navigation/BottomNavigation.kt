@@ -26,6 +26,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.qpid_android.R
 import com.example.qpid_android.design_system.color.QpidColor
+import com.example.qpid_android.design_system.typograpy.PreBold12
 
 @Composable
 fun QpidBottomNavigation(
@@ -50,7 +51,7 @@ fun QpidBottomNavigation(
         items.forEach { screen ->
             val selected =
                 currentDestination?.hierarchy?.any { it.route == screen.route } == true
-            val color = if (selected) Color(0xFF008433) else QpidColor.Black
+            val color = if (selected) QpidColor.Blue else QpidColor.Black
             Column(
                 Modifier
                     .height(80.dp)
@@ -73,7 +74,7 @@ fun QpidBottomNavigation(
                     tint = color,
                     modifier = Modifier.size(24.dp)
                 )
-                Text(text = screen.label, color = color)
+                PreBold12(text = screen.label, color = color)
             }
         }
     }
