@@ -83,6 +83,107 @@ fun PreBold20(
 }
 
 @Composable
+fun PreSemiBold24(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.SemiBold,
+        size = 24,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+
+@Composable
+fun PreSemiBold32(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.SemiBold,
+        size = 32,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+@Composable
+fun PreMedium12(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Medium,
+        size = 12,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+
+@Composable
 fun PreMedium16(
     text: String,
     modifier: Modifier = Modifier,
@@ -115,6 +216,39 @@ fun PreMedium16(
     )
 }
 
+
+@Composable
+fun PreMedium20(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Medium,
+        size = 20,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
 
 @Composable
 fun Typography(

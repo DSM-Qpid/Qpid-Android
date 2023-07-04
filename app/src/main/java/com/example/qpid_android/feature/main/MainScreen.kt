@@ -32,7 +32,7 @@ fun MainScreen(
 
     Scaffold(
         modifier = Modifier
-            .background(QpidColor.Gray100)
+            .background(QpidColor.Gray200)
             .padding(
                 bottom = DevicePaddings.navigationBarHeightDp.dp,
             ),
