@@ -18,6 +18,7 @@ import com.example.qpid_android.feature.webview.WebViewScreen
 import com.example.qpid_android.navigation.QpidBottomNavigation
 import com.example.qpid_android.navigation.QpidBottomNavigationItem
 import com.example.qpid_android.util.DevicePaddings
+import com.example.qpid_android.util.setBlueStatusBar
 import com.example.qpid_android.util.setLightStatusBar
 
 @Composable
@@ -28,7 +29,7 @@ fun MainScreen(
     val navController = rememberNavController()
 
     val context = LocalContext.current
-    context.setLightStatusBar()
+    context.setBlueStatusBar()
 
     Scaffold(
         modifier = Modifier
@@ -52,13 +53,13 @@ fun MainScreen(
             composable(QpidBottomNavigationItem.Search.route) {
                 WebViewScreen(
                     navController = mainController,
-                    url = "",
+                    url = "http://172.30.65.180:3000/search",
                 )
             }
             composable(QpidBottomNavigationItem.Board.route) {
                 WebViewScreen(
                     navController = mainController,
-                    url = ""
+                    url = "http://172.30.65.180:3000/list"
                 )
             }
             composable(QpidBottomNavigationItem.Mypage.route) {

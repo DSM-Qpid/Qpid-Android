@@ -36,9 +36,6 @@ import com.example.qpid_android.feature.webview.WebViewScreen
 fun MypageScreen(
     navController: NavController,
 ) {
-    val context = LocalContext.current
-    context.setBlueStatusBar()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +70,6 @@ fun MypageScreen(
                     color = QpidColor.White,
                     shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
                 )
-                .padding(horizontal = 16.dp)
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             Line(
@@ -85,12 +81,11 @@ fun MypageScreen(
                     .width(120.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            
-            PreSemiBold24(text = "내가 쓴 글")
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            WebViewScreen(navController = navController, url = "")
+            WebViewScreen(
+                navController = navController,
+                url = "http://192.168.137.1:3000/list/mylist"
+            )
         }
     }
 }

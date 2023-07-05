@@ -14,6 +14,7 @@ import com.example.qpid_android.feature.main.MainScreen
 import com.example.qpid_android.feature.signin.SigninScreen
 import com.example.qpid_android.feature.signup.SignupScreen
 import com.example.qpid_android.feature.splash.SplashScreen
+import com.example.qpid_android.feature.write.WriteScreen
 import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.DevicePaddings
 import com.example.qpid_android.util.getNavigationBarHeightDp
@@ -34,12 +35,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun BaseApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = QpidNavigationItem.Splash.route) {
+    NavHost(navController = navController, startDestination = QpidNavigationItem.Main.route) {
         composable(QpidNavigationItem.Splash.route) {
             SplashScreen(navController)
         }
         composable(QpidNavigationItem.Main.route) {
             MainScreen(navController)
+        }
+        composable(QpidNavigationItem.Write.route) {
+            WriteScreen(navController)
         }
         composable(QpidNavigationItem.Signin.route) {
             SigninScreen(navController)
