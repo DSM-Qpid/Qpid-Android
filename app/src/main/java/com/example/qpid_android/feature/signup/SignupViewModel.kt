@@ -1,22 +1,16 @@
 package com.example.qpid_android.feature.signup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qpid_android.api.RetrofitClient
+import com.example.qpid_android.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(): ViewModel() {
-
-    private val _success = MutableLiveData<Boolean>()
-    val success: LiveData<Boolean> get() = _success
-
-    private val _fail = MutableLiveData<String>()
-    val fail: LiveData<String> get() = _fail
+class SignupViewModel @Inject constructor(): BaseViewModel<SignupViewModel.Event>() {
 
     fun signup(
         id: String,
@@ -25,16 +19,17 @@ class SignupViewModel @Inject constructor(): ViewModel() {
     ) {
         val retrofitClient = RetrofitClient()
 
-        viewModelScope.launch {
-            kotlin.runCatching {
-                _success.value = true
+        execute(
+            job = {
+                  emitEvent(Event.Success)
                 // retrofitClient.getAPI().signup(SignupRequest(id, password, name))
-            }.onSuccess {
-                _success.value = true
-            }.onFailure {
-                _fail.value = it.message
-            }
-        }
+            },
+            onSuccess = { emitEvent(Event.Success) },
+            onFailure = { emitEvent(Event.Fail(it.message ?: "")) },
+        )
     }
-
+    sealed class Event {
+        object Success : Event()
+        data class Fail(val message: String) : Event()
+    }
 }

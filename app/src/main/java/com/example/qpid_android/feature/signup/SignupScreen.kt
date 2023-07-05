@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +35,8 @@ import com.example.qpid_android.design_system.typograpy.PreMedium12
 import com.example.qpid_android.design_system.typograpy.PreMedium16
 import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.rememberToast
+import com.example.qpid_android.util.updateUi
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun SignupScreen(
@@ -48,16 +51,14 @@ fun SignupScreen(
     val btnEnabled = id.length >= 8 && password.length >= 8 && name.length >= 2
 
     val toast = rememberToast()
-
-    val success by vm.success.observeAsState(false)
-    if (success) {
-        navController.navigate(QpidNavigationItem.Signin.route)
-    }
-
-    val fail by vm.fail.observeAsState()
-    if (!fail.isNullOrEmpty()) {
-        Log.d("TAG", "fail: $fail")
-        toast(message = fail ?: "실패")
+    LaunchedEffect(vm) {
+        vm.eventFlow.collect {
+            when (it) {
+                is SignupViewModel.Event.Success ->
+                    navController.navigate(QpidNavigationItem.Signin.route)
+                is SignupViewModel.Event.Fail -> toast(it)
+            }
+        }
     }
 
     Column(
