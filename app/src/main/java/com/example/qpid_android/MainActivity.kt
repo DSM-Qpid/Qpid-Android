@@ -19,7 +19,9 @@ import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.DevicePaddings
 import com.example.qpid_android.util.getNavigationBarHeightDp
 import com.example.qpid_android.util.getStatusBarHeightDp
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         DevicePaddings.statusBarHeightDp = getStatusBarHeightDp()
@@ -30,12 +32,16 @@ class MainActivity : ComponentActivity() {
             BaseApp()
         }
     }
+
+    companion object {
+        var token = ""
+    }
 }
 
 @Composable
 fun BaseApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = QpidNavigationItem.Main.route) {
+    NavHost(navController = navController, startDestination = QpidNavigationItem.Splash.route) {
         composable(QpidNavigationItem.Splash.route) {
             SplashScreen(navController)
         }
@@ -49,7 +55,7 @@ fun BaseApp() {
             SigninScreen(navController)
         }
         composable(QpidNavigationItem.Signup.route) {
-            SignupScreen(navController)
+            SignupScreen(navController = navController)
         }
     }
 }
@@ -59,3 +65,5 @@ fun Context.getActivity(): ComponentActivity? = when (this) {
     is ContextWrapper -> baseContext.getActivity()
     else -> null
 }
+
+

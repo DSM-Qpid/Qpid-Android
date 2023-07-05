@@ -1,5 +1,7 @@
 package com.example.qpid_android.feature.signup
 
+import android.util.Log
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,11 +17,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qpid_android.design_system.color.QpidColor
@@ -29,16 +33,32 @@ import com.example.qpid_android.design_system.typograpy.PreBold30
 import com.example.qpid_android.design_system.typograpy.PreMedium12
 import com.example.qpid_android.design_system.typograpy.PreMedium16
 import com.example.qpid_android.navigation.QpidNavigationItem
+import com.example.qpid_android.util.rememberToast
 
 @Composable
 fun SignupScreen(
     navController: NavController,
 ) {
+    val vm: SignupViewModel = hiltViewModel()
+
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
 
     val btnEnabled = id.length >= 8 && password.length >= 8 && name.length >= 2
+
+    val toast = rememberToast()
+
+    val success by vm.success.observeAsState(false)
+    if (success) {
+        navController.navigate(QpidNavigationItem.Signin.route)
+    }
+
+    val fail by vm.fail.observeAsState()
+    if (!fail.isNullOrEmpty()) {
+        Log.d("TAG", "fail: $fail")
+        toast(message = fail ?: "실패")
+    }
 
     Column(
         modifier = Modifier
@@ -114,7 +134,7 @@ fun SignupScreen(
                 text = "회원가입",
                 isEnabled = btnEnabled
             ) {
-
+                vm.signup(id, password, name)
             }
 
             Spacer(modifier = Modifier.height(25.dp))
