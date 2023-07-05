@@ -6,6 +6,7 @@ import com.google.gson.Gson
 class WebToAppBridge(
     val goToWrite: () -> Unit = {},
     val giveToken: () -> (String) = {""},
+    val goToPatch: (PatchInfo) -> Unit = {},
     private val gson: Gson = Gson(),
 ) {
 
@@ -14,4 +15,8 @@ class WebToAppBridge(
 
     @JavascriptInterface
     fun token() = giveToken()
+
+    @JavascriptInterface
+    fun patch(data: String) =
+        goToPatch(gson.fromJson(data, PatchInfo::class.java))
 }

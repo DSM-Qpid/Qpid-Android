@@ -7,9 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.qpid_android.feature.main.MainScreen
 import com.example.qpid_android.feature.signin.SigninScreen
 import com.example.qpid_android.feature.signup.SignupScreen
@@ -48,8 +50,40 @@ fun BaseApp() {
         composable(QpidNavigationItem.Main.route) {
             MainScreen(navController)
         }
-        composable(QpidNavigationItem.Write.route) {
-            WriteScreen(navController)
+        composable(
+            route = QpidNavigationItem.Write.route +
+                    "id{id}" + "title{title}" + "content{content}" + "tag{tag}",
+            arguments = listOf(
+                navArgument(name = "id") {
+                    type = NavType.IntType
+                    defaultValue = 0
+                },
+                navArgument(name = "title") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument(name = "content") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument(name = "tag") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+            )
+        ) {
+            val id = it.arguments?.getInt("id")
+            val title = it.arguments?.getString("title") ?: ""
+            val content = it.arguments?.getString("content") ?: ""
+            val tag = it.arguments?.getString("tag") ?: ""
+
+            WriteScreen(
+                navController = navController,
+                id = id,
+                titleT = title,
+                contentT = content,
+                tagT = tag,
+            )
         }
         composable(QpidNavigationItem.Signin.route) {
             SigninScreen(navController)

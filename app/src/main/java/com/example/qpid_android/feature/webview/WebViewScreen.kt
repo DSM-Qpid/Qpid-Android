@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.qpid_android.MainActivity.Companion.token
 import com.example.qpid_android.design_system.typograpy.PreMedium16
 import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.updateUi
@@ -29,7 +30,6 @@ import com.example.qpid_android.util.updateUi
 fun WebViewScreen(
     navController: NavController,
     url: String,
-    token: String = "",
 ) {
     val context = LocalContext.current
     val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -38,9 +38,17 @@ fun WebViewScreen(
     var webView: WebView? by remember { mutableStateOf(null) }
     val bridge = WebToAppBridge(
         goToWrite = { updateUi { navController.navigate(QpidNavigationItem.Write.route) } },
-        giveToken = {
-            val token = "accessToken"
-            token
+        giveToken = { return@WebToAppBridge token },
+        goToPatch = { info ->
+            updateUi {
+                navController.navigate(
+                    route = QpidNavigationItem.Write.route +
+                            "id${info.id}" +
+                            "title${info.title}" +
+                            "content${info.content}" +
+                            "tag${info.tag}"
+                )
+            }
         }
     )
 

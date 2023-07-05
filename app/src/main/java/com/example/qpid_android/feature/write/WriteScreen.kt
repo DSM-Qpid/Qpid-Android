@@ -1,6 +1,5 @@
 package com.example.qpid_android.feature.write
 
-import android.nfc.Tag
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -26,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,13 +69,15 @@ fun WriteScreen(
     navController: NavController,
     vm: WriteViewModel = hiltViewModel(),
     id: Int? = null,
+    titleT: String = "",
+    contentT: String = "",
     tagT: String = MenuItem.FOOD
 ) {
     val context = LocalContext.current
     context.setLightStatusBar()
 
-    var titleText by remember { mutableStateOf("") }
-    var contentText by remember { mutableStateOf("") }
+    var titleText by remember { mutableStateOf(titleT) }
+    var contentText by remember { mutableStateOf(contentT) }
     var tagText by remember { mutableStateOf(tagT) }
 
     val toast = rememberToast()
@@ -138,7 +138,11 @@ fun WriteScreen(
                         interactionSource = MutableInteractionSource(),
                         indication = null,
                     ) {
-                        vm.writeFeed(titleText, contentText, tagText.toMenu())
+                        if (id == null) {
+                            vm.writeFeed(titleText, contentText, tagText.toMenu())
+                        } else {
+                            vm.patchFeed(id, titleText, contentText, tagText.toMenu())
+                        }
                     }
             )
         }
