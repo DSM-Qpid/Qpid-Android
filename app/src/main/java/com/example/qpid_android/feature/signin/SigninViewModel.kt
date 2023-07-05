@@ -1,5 +1,6 @@
 package com.example.qpid_android.feature.signin
 
+import android.util.Log
 import com.example.qpid_android.MainActivity.Companion.token
 import com.example.qpid_android.api.RetrofitClient
 import com.example.qpid_android.api.signin.SigninRequest
@@ -21,6 +22,7 @@ class SigninViewModel @Inject constructor() : BaseViewModel<SigninViewModel.Even
             job = { retrofitClient.getAPI().signin(SigninRequest(id, password)) },
             onSuccess = {
                 token = "Bearer " + it.access_token
+                Log.d("TAG", "signin: $token")
                 emitEvent(Event.Success)
             },
             onFailure = { emitEvent(Event.Fail(it.message ?: "")) },

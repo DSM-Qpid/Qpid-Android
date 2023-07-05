@@ -1,6 +1,7 @@
 package com.example.qpid_android.feature.signup
 
 import com.example.qpid_android.api.RetrofitClient
+import com.example.qpid_android.api.signup.SignupRequest
 import com.example.qpid_android.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,10 +17,7 @@ class SignupViewModel @Inject constructor(): BaseViewModel<SignupViewModel.Event
         val retrofitClient = RetrofitClient()
 
         execute(
-            job = {
-                  emitEvent(Event.Success)
-                // retrofitClient.getAPI().signup(SignupRequest(id, password, name))
-            },
+            job = { retrofitClient.getAPI().signup(SignupRequest(id, password, name)) },
             onSuccess = { emitEvent(Event.Success) },
             onFailure = { emitEvent(Event.Fail(it.message ?: "")) },
         )

@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
-    private val baseURI = "http://172.20.67.156:5436/"
+    private val baseURI = "http://1ce7-119-203-74-86.ngrok-free.app/"
 
     val retrofit = Retrofit.Builder()
         .baseUrl(baseURI)

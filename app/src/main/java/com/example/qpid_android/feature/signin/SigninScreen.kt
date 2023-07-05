@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -32,6 +33,7 @@ import com.example.qpid_android.design_system.typograpy.PreMedium12
 import com.example.qpid_android.design_system.typograpy.PreMedium16
 import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.rememberToast
+import com.example.qpid_android.util.setLightStatusBar
 import kotlinx.coroutines.flow.collect
 
 @Composable
@@ -39,6 +41,9 @@ fun SigninScreen(
     navController: NavController,
     vm: SigninViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    context.setLightStatusBar()
+
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -120,7 +125,7 @@ fun SigninScreen(
                 text = "로그인",
                 isEnabled = btnEnabled
             ) {
-
+                vm.signin(id, password)
             }
 
             Spacer(modifier = Modifier.height(25.dp))

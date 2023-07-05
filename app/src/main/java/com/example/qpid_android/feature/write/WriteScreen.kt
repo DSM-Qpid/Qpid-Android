@@ -1,5 +1,8 @@
 package com.example.qpid_android.feature.write
 
+import android.nfc.Tag
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,6 +50,13 @@ import com.example.qpid_android.util.rememberToast
 import com.example.qpid_android.util.setLightStatusBar
 import kotlinx.coroutines.flow.collect
 
+internal object MenuItem {
+    const val MOVIE = "영화관"
+    const val FOOD = "음식점"
+    const val BANK = "은행"
+    const val ETC = "기타"
+}
+
 @Composable
 fun WriteScreen(
     navController: NavController,
@@ -53,7 +67,7 @@ fun WriteScreen(
 
     var titleText by remember { mutableStateOf("") }
     var contentText by remember { mutableStateOf("") }
-    var tagText by remember { mutableStateOf("") }
+    var tagText by remember { mutableStateOf(MenuItem.MOVIE) }
 
     val toast = rememberToast()
     LaunchedEffect(vm) {
@@ -167,10 +181,95 @@ fun WriteScreen(
             Spacer(modifier = Modifier.height(20.dp))
             PreMedium16(text = "태그")
             Spacer(modifier = Modifier.height(20.dp))
-
-
+            TagPicker(text = tagText, checkWhere = {tagText = it})
         }
 
+    }
+}
+
+@Composable
+fun TagPicker(
+    text: String,
+    checkWhere: (String) -> Unit
+) {
+    val menu = listOf("음식점", "은행", "영화관", "기타")
+    var isDrop by remember { mutableStateOf(false) }
+    var targetValue by remember { mutableStateOf(0F) }
+    val rotateValue: Float by animateFloatAsState(
+        targetValue = targetValue,
+        tween(300)
+    )
+    
+    Column(
+        modifier = Modifier
+            .width(120.dp)
+            .background(
+                color = QpidColor.Gray200,
+                shape = RoundedCornerShape(10.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null,
+                ) {
+                    isDrop = true
+                    targetValue = 0F
+                }
+                .padding(horizontal = 4.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.width(10.dp))
+            PreMedium16(
+                text = text,
+                color = QpidColor.Gray500
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow),
+                contentDescription = null,
+                tint = QpidColor.Gray400,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(align = Alignment.End)
+                    .size(16.dp)
+                    .rotate(rotateValue)
+            )
+        }
+        DropdownMenu(
+            expanded = isDrop,
+            onDismissRequest = {
+                isDrop = false
+                targetValue = -90F
+            },
+            modifier = Modifier
+                .width(120.dp)
+                .background(QpidColor.Gray200)
+        ) {
+            menu.forEach {
+                if (it != text) {
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Row {
+                        Spacer(modifier = Modifier.width(10.dp))
+                        PreMedium16(
+                            text = it,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(align = Alignment.Start)
+                                .clickable(
+                                    interactionSource = MutableInteractionSource(),
+                                    indication = null,
+                                ) {
+                                    checkWhere(it)
+                                    isDrop = false
+                                    targetValue = -90F
+                                }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
+            }
+        }
     }
 }
 
