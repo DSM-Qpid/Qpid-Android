@@ -12,20 +12,21 @@ class AuthorizationInterceptor : Interceptor {
         val method = request.method
 
         val ignorePath = listOf(
-            "/user/login",
-            "/user/signup"
+            "/users/login",
+            "/users/signup"
         )
 
         return if (ignorePath.contains(path))
             chain.proceed(
-                request.newBuilder().header("ngrok-skip-browser-warning", "69420").build()
+                request.newBuilder()
+                    .addHeader("ngrok-skip-browser-warning", "69420").build()
             )
         else {
             Log.d("TAG", "intercept: $token")
             chain.proceed(
                 request.newBuilder()
-                    .header("Authorization", token)
-                    .header("ngrok-skip-browser-warning", "69420").build()
+                    .addHeader("Authorization", token)
+                    .addHeader("ngrok-skip-browser-warning", "69420").build()
             )
         }
 

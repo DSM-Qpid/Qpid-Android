@@ -6,11 +6,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
-    private val baseURI = "http://1ce7-119-203-74-86.ngrok-free.app/"
+    private val baseURI = "https://1ce7-119-203-74-86.ngrok-free.app/"
+
+    private val httpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val authorizationInterceptor = AuthorizationInterceptor()
+    private val emptyBodyInterceptor = EmptyBodyInterceptor()
 
     val retrofit = Retrofit.Builder()
         .baseUrl(baseURI)
-        .client(okHttpClient())
+        .client(
+            OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(authorizationInterceptor)
+                .addInterceptor(emptyBodyInterceptor)
+                .build()
+        )
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -26,7 +36,7 @@ private fun okHttpClient(): OkHttpClient {
 
     return OkHttpClient.Builder()
         .addInterceptor(httpLoggingInterceptor)
-        .addInterceptor(authorizationInterceptor)
+        //.addInterceptor(authorizationInterceptor)
         .addInterceptor(emptyBodyInterceptor)
         .build()
 }

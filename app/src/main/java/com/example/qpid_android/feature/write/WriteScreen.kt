@@ -57,17 +57,28 @@ internal object MenuItem {
     const val ETC = "기타"
 }
 
+fun String.toMenu() =
+    when(this) {
+        MenuItem.MOVIE -> "MOVIE"
+        MenuItem.FOOD -> "FOOD"
+        MenuItem.BANK -> "BANK"
+        MenuItem.ETC -> "ETC"
+        else -> "ETC"
+    }
+
 @Composable
 fun WriteScreen(
     navController: NavController,
-    vm: WriteViewModel = hiltViewModel()
+    vm: WriteViewModel = hiltViewModel(),
+    id: Int? = null,
+    tagT: String = MenuItem.FOOD
 ) {
     val context = LocalContext.current
     context.setLightStatusBar()
 
     var titleText by remember { mutableStateOf("") }
     var contentText by remember { mutableStateOf("") }
-    var tagText by remember { mutableStateOf(MenuItem.MOVIE) }
+    var tagText by remember { mutableStateOf(tagT) }
 
     val toast = rememberToast()
     LaunchedEffect(vm) {
@@ -75,7 +86,7 @@ fun WriteScreen(
             when (it) {
                 is WriteViewModel.Event.Success ->
                     navController.popBackStack()
-                is WriteViewModel.Event.Fail -> toast(it)
+                is WriteViewModel.Event.Fail -> toast(it.message)
             }
         }
     }
@@ -122,8 +133,12 @@ fun WriteScreen(
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.End)
                     .padding(end = 10.dp)
-                    .clickable {
-                        vm.writeFeed(titleText, contentText, tagText)
+                    .width(60.dp)
+                    .clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null,
+                    ) {
+                        vm.writeFeed(titleText, contentText, tagText.toMenu())
                     }
             )
         }
@@ -192,9 +207,9 @@ fun TagPicker(
     text: String,
     checkWhere: (String) -> Unit
 ) {
-    val menu = listOf("음식점", "은행", "영화관", "기타")
+    val menu = listOf(MenuItem.FOOD, MenuItem.BANK, MenuItem.MOVIE, MenuItem.ETC)
     var isDrop by remember { mutableStateOf(false) }
-    var targetValue by remember { mutableStateOf(0F) }
+    var targetValue by remember { mutableStateOf(-90F) }
     val rotateValue: Float by animateFloatAsState(
         targetValue = targetValue,
         tween(300)

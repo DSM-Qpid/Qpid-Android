@@ -1,5 +1,6 @@
 package com.example.qpid_android.api
 
+import com.example.qpid_android.MainActivity.Companion.token
 import com.example.qpid_android.api.feed.FeedRequest
 import com.example.qpid_android.api.profile.ProfileResponse
 import com.example.qpid_android.api.signin.SigninRequest
@@ -7,6 +8,8 @@ import com.example.qpid_android.api.signin.SigninResponse
 import com.example.qpid_android.api.signup.SignupRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path

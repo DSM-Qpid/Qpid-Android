@@ -1,5 +1,6 @@
 package com.example.qpid_android.feature.mypage
 
+import android.util.Log
 import com.example.qpid_android.api.RetrofitClient
 import com.example.qpid_android.api.profile.ProfileResponse
 import com.example.qpid_android.base.BaseViewModel
@@ -8,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MypageViewModel @Inject constructor(): BaseViewModel<MypageViewModel.Event>() {
+class MypageViewModel @Inject constructor() : BaseViewModel<MypageViewModel.Event>() {
 
     fun getProfile() {
 
@@ -17,7 +18,7 @@ class MypageViewModel @Inject constructor(): BaseViewModel<MypageViewModel.Event
         execute(
             job = { retrofitClient.getAPI().getProfile() },
             onSuccess = { emitEvent(Event.Success(it)) },
-            onFailure = {  }
+            onFailure = { }
         )
     }
 

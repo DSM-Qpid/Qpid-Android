@@ -20,7 +20,7 @@ class WriteViewModel @Inject constructor(): BaseViewModel<WriteViewModel.Event>(
         execute(
             job = { retrofitClient.getAPI().createFeed(FeedRequest(title, content, tag)) },
             onSuccess = { emitEvent(Event.Success) },
-            onFailure = { emitEvent(Event.Fail(it.message ?: "")) },
+            onFailure = { emitEvent(Event.Fail("입력 형식이 알맞지 않습니다.")) },
         )
     }
 
@@ -33,7 +33,7 @@ class WriteViewModel @Inject constructor(): BaseViewModel<WriteViewModel.Event>(
         execute(
             job = {  retrofitClient.getAPI().patchFeed(id, FeedRequest(title, content, tag)) },
             onSuccess = { emitEvent(Event.Success) },
-            onFailure = { emitEvent(Event.Fail(it.message ?: "")) },
+            onFailure = { emitEvent(Event.Fail("입력 형식이 알맞지 않습니다.")) },
         )
     }
 

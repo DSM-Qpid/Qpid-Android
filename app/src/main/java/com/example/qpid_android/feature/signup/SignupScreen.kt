@@ -56,7 +56,7 @@ fun SignupScreen(
             when (it) {
                 is SignupViewModel.Event.Success ->
                     navController.navigate(QpidNavigationItem.Signin.route)
-                is SignupViewModel.Event.Fail -> toast(it)
+                is SignupViewModel.Event.Fail -> toast(it.message)
             }
         }
     }

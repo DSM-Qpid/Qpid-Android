@@ -25,7 +25,7 @@ class SigninViewModel @Inject constructor() : BaseViewModel<SigninViewModel.Even
                 Log.d("TAG", "signin: $token")
                 emitEvent(Event.Success)
             },
-            onFailure = { emitEvent(Event.Fail(it.message ?: "")) },
+            onFailure = { emitEvent(Event.Fail("입력 정보를 확인해주세요.")) },
         )
     }
 
