@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.qpid_android.design_system.color.QpidColor
 import com.example.qpid_android.design_system.component.QpidButton
@@ -29,15 +31,29 @@ import com.example.qpid_android.design_system.typograpy.PreBold30
 import com.example.qpid_android.design_system.typograpy.PreMedium12
 import com.example.qpid_android.design_system.typograpy.PreMedium16
 import com.example.qpid_android.navigation.QpidNavigationItem
+import com.example.qpid_android.util.rememberToast
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun SigninScreen(
     navController: NavController,
+    vm: SigninViewModel = hiltViewModel()
 ) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     val btnEnabled = id.length >= 8 && password.length >= 8
+
+    val toast = rememberToast()
+    LaunchedEffect(vm) {
+        vm.eventFlow.collect {
+            when (it) {
+                is SigninViewModel.Event.Success ->
+                    navController.navigate(QpidNavigationItem.Main.route)
+                is SigninViewModel.Event.Fail -> toast(it)
+            }
+        }
+    }
 
     Column(
         modifier = Modifier

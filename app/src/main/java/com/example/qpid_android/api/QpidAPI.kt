@@ -3,6 +3,7 @@ package com.example.qpid_android.api
 import com.example.qpid_android.api.feed.FeedRequest
 import com.example.qpid_android.api.profile.ProfileResponse
 import com.example.qpid_android.api.signin.SigninRequest
+import com.example.qpid_android.api.signin.SigninResponse
 import com.example.qpid_android.api.signup.SignupRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,7 +21,7 @@ interface QpidAPI {
     @POST("users/login")
     suspend fun signin(
         @Body signinRequest: SigninRequest,
-    )
+    ): SigninResponse
 
     @GET("users/info")
     suspend fun getProfile(): ProfileResponse

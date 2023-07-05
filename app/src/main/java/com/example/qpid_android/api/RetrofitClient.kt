@@ -22,9 +22,11 @@ class RetrofitClient {
 private fun okHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     val authorizationInterceptor = AuthorizationInterceptor()
+    val emptyBodyInterceptor = EmptyBodyInterceptor()
 
     return OkHttpClient.Builder()
         .addInterceptor(httpLoggingInterceptor)
         .addInterceptor(authorizationInterceptor)
+        .addInterceptor(emptyBodyInterceptor)
         .build()
 }

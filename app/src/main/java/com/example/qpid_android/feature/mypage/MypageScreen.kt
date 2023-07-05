@@ -18,11 +18,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.qpid_android.design_system.color.QpidColor
 import com.example.qpid_android.util.setBlueStatusBar
@@ -31,11 +37,28 @@ import com.example.qpid_android.design_system.component.Line
 import com.example.qpid_android.design_system.typograpy.PreSemiBold24
 import com.example.qpid_android.design_system.typograpy.PreSemiBold32
 import com.example.qpid_android.feature.webview.WebViewScreen
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun MypageScreen(
     navController: NavController,
+    vm: MypageViewModel = hiltViewModel(),
 ) {
+
+    var name by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        vm.getProfile()
+    }
+
+    LaunchedEffect(vm) {
+        vm.eventFlow.collect {
+            when (it) {
+                is MypageViewModel.Event.Success -> name = it.data.name
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +75,7 @@ fun MypageScreen(
 
         Row {
             PreSemiBold32(
-                text = "햄스터",
+                text = name,
                 color = QpidColor.White,
             )
             PreSemiBold32(

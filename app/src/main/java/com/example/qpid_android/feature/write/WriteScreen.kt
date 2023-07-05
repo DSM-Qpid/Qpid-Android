@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.qpid_android.R
@@ -36,17 +39,32 @@ import com.example.qpid_android.design_system.component.TextCounter
 import com.example.qpid_android.design_system.component.TitleTextField
 import com.example.qpid_android.design_system.typograpy.PreBold20
 import com.example.qpid_android.design_system.typograpy.PreMedium16
+import com.example.qpid_android.util.rememberToast
 import com.example.qpid_android.util.setLightStatusBar
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun WriteScreen(
     navController: NavController,
+    vm: WriteViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     context.setLightStatusBar()
 
-    var titleText by rememberSaveable { mutableStateOf("") }
-    var contentText by rememberSaveable { mutableStateOf("") }
+    var titleText by remember { mutableStateOf("") }
+    var contentText by remember { mutableStateOf("") }
+    var tagText by remember { mutableStateOf("") }
+
+    val toast = rememberToast()
+    LaunchedEffect(vm) {
+        vm.eventFlow.collect {
+            when (it) {
+                is WriteViewModel.Event.Success ->
+                    navController.popBackStack()
+                is WriteViewModel.Event.Fail -> toast(it)
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -90,6 +108,9 @@ fun WriteScreen(
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.End)
                     .padding(end = 10.dp)
+                    .clickable {
+                        vm.writeFeed(titleText, contentText, tagText)
+                    }
             )
         }
 
