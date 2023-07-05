@@ -28,7 +28,7 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         delay(2000)
 
-        navController.navigate(QpidNavigationItem.Main.route) {
+        navController.navigate(QpidNavigationItem.Signin.route) {
             popUpTo(0)
         }
     }

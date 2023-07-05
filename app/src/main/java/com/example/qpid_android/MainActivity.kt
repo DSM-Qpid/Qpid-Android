@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qpid_android.feature.main.MainScreen
+import com.example.qpid_android.feature.signin.SigninScreen
+import com.example.qpid_android.feature.signup.SignupScreen
 import com.example.qpid_android.feature.splash.SplashScreen
 import com.example.qpid_android.navigation.QpidNavigationItem
 import com.example.qpid_android.util.DevicePaddings
@@ -38,6 +40,12 @@ fun BaseApp() {
         }
         composable(QpidNavigationItem.Main.route) {
             MainScreen(navController)
+        }
+        composable(QpidNavigationItem.Signin.route) {
+            SigninScreen(navController)
+        }
+        composable(QpidNavigationItem.Signup.route) {
+            SignupScreen(navController)
         }
     }
 }

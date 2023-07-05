@@ -30,6 +30,7 @@ import com.example.qpid_android.R
 import com.example.qpid_android.design_system.component.Line
 import com.example.qpid_android.design_system.typograpy.PreSemiBold24
 import com.example.qpid_android.design_system.typograpy.PreSemiBold32
+import com.example.qpid_android.feature.webview.WebViewScreen
 
 @Composable
 fun MypageScreen(
@@ -87,7 +88,9 @@ fun MypageScreen(
             
             PreSemiBold24(text = "내가 쓴 글")
 
+            Spacer(modifier = Modifier.height(20.dp))
 
+            WebViewScreen(navController = navController, url = "")
         }
     }
 }

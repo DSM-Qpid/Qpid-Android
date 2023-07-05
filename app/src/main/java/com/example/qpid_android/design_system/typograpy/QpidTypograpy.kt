@@ -83,6 +83,39 @@ fun PreBold20(
 }
 
 @Composable
+fun PreBold30(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Bold,
+        size = 30,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
+@Composable
 fun PreSemiBold24(
     text: String,
     modifier: Modifier = Modifier,
@@ -249,6 +282,40 @@ fun PreMedium20(
         onTextLayout = onTextLayout
     )
 }
+
+@Composable
+fun PreRegular20(
+    text: String,
+    modifier: Modifier = Modifier,
+    lineHeight: Int = 0,
+    letterSpacing: Int = 0,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
+) {
+    Typography(
+        text = text,
+        modifier = modifier,
+        weight = FontWeight.Normal,
+        size = 20,
+        color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        baselineToTop = 15f,
+        baselineToBottom = 0f,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout
+    )
+}
+
 
 @Composable
 fun Typography(

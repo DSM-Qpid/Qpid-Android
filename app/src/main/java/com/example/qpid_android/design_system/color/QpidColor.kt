@@ -17,4 +17,5 @@ object QpidColor {
 
     val White_Blue = Color(0xFFE1DFFF)
     val Blue = Color(0xFF6A5DFF)
+    val Dark_Blue = Color(0xFF564BD4)
 }
