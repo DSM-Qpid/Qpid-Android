@@ -11,8 +11,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +36,10 @@ fun TitleTextField(
     placeholder: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
+
+    var focused by remember { mutableStateOf(false) }
+    val lineColor = if (focused) QpidColor.Blue else QpidColor.Gray200
+
     BasicTextField(
         value = text,
         onValueChange = onTextChange,
@@ -46,7 +55,8 @@ fun TitleTextField(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp),
+            .height(44.dp)
+            .onFocusChanged { focused = it.isFocused },
         decorationBox = {
             Box {
                 if (text.isEmpty()) {
@@ -58,7 +68,7 @@ fun TitleTextField(
                 it()
                 
                 Line(
-                    lineColor = QpidColor.Gray200,
+                    lineColor = lineColor,
                     lineHeight = 8f,
                     modifier = Modifier
                         .fillMaxSize()

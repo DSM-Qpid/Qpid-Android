@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
@@ -56,8 +57,12 @@ fun SignTextFiled(
         if (passwordVisible) painterResource(id = R.drawable.ic_password_on)
         else painterResource(id = R.drawable.ic_password_off)
 
+    var focused by remember { mutableStateOf(false) }
+
     val backgroundColor = if (content.isEmpty()) QpidColor.White else QpidColor.Gray100
+    val borderColor = if (focused) QpidColor.Blue else QpidColor.Gray200
     val textFiledShape = RoundedCornerShape(10.dp)
+
 
     Column {
         PreMedium20(text = title)
@@ -88,9 +93,10 @@ fun SignTextFiled(
                 )
                 .border(
                     width = 2.dp,
-                    color = QpidColor.Gray200,
+                    color = borderColor,
                     shape = textFiledShape,
-                ),
+                )
+                .onFocusChanged { focused = it.isFocused },
             decorationBox = {
                 Box(
                     modifier = Modifier.padding(horizontal = 12.dp),

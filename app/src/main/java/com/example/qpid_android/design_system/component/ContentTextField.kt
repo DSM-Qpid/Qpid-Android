@@ -9,7 +9,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +31,9 @@ fun ContentTextField(
     placeholder: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
+    var focused by remember { mutableStateOf(false) }
+    val borderColor = if (focused) QpidColor.Blue else QpidColor.Gray200
+
     BasicTextField(
         value = text,
         onValueChange = onTextChange,
@@ -42,10 +50,11 @@ fun ContentTextField(
             .height(132.dp)
             .border(
                 width = 1.dp,
-                color = QpidColor.Gray200,
+                color = borderColor,
                 shape = RoundedCornerShape(8.dp)
             )
-            .padding(12.dp),
+            .padding(12.dp)
+            .onFocusChanged { focused = it.isFocused },
         decorationBox = {
             Box {
                 if (text.isEmpty()) {
